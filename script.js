@@ -25,7 +25,47 @@ function squareClicked(){
     return;
 }
 
+
 function getNumber(id){
+    let clickedSquare = document.getElementById(id);
+    let idStack = [];
+    if (clickedSquare.value >= 1){
+        clickedSquare.innerHTML = clickedSquare.value;
+        clickedSquare.style.backgroundColor = 'grey';
+        return;
+    }
+    else if (clickedSquare.value == 'b'){
+        clickedSquare.innerHTML = clickedSquare.value;
+        clickedSquare.style.backgroundColor = 'black';
+        clickedSquare.style.color='red';
+        return;
+    }
+    else{
+        for (let i = (parseInt(clickedSquare.getAttribute('data-row')) - 1); i <= (parseInt(clickedSquare.getAttribute('data-row')) + 1); i++){
+            for (let j = (parseInt(clickedSquare.getAttribute('data-column')) - 1); j <= (parseInt(clickedSquare.getAttribute('data-column')) + 1); j++){         
+                let idCheck = gridSize * (i-1) + j;
+                console.log(idCheck);
+                /*
+                if (document.getElementById(idCheck) == null){
+                    continue;
+                }
+                else{
+                    if (idStack.includes(idCheck) == true){
+                        continue;
+                    }
+                    else{
+                        console.log(idCheck);
+                        idStack.push(idCheck);
+                        getNumber(idCheck);
+                    }
+                }*/
+            }
+        }
+    }
+}
+
+
+function getNumber1(id){
     let clickedSquare = document.getElementById(id);
     if (clickedSquare.value >= 1){
         clickedSquare.innerHTML = clickedSquare.value;
@@ -152,8 +192,7 @@ function populateNumbers(location){
             if (document.getElementById(idCheck) == null){
                 continue;
             }
-            console.log(`id: ${document.getElementById(idCheck)}`);
-            if (document.getElementById(idCheck).value == 'b'){
+            else if (document.getElementById(idCheck).value == 'b'){
                 continue;
             }
             else if (document.getElementById(idCheck).value == ''){
