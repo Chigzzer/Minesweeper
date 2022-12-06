@@ -21,4 +21,5 @@ body{
 .square{
     background-color: white;
     border: 1px black solid;
+    text-align: center;
 }
