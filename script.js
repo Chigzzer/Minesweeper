@@ -145,71 +145,23 @@ function createNumbers(){
 }
 
 function populateNumbers(location){
-    let indexCheck;
-    // if bomb is in the top left corner
-    if (location.id == 1){
-        indexCheck = [1 + 1, 1 + gridSize, 2 + gridSize];
-    }
-
-    // Bomb located in top right
-    else if (location.id == gridSize){
-        indexCheck = [gridSize - 1, gridSize + gridSize, (gridSize - 1) + gridSize];
-    }
-
-    // if bomb is bottom left
-    else if (location.id == gridSize * (gridSize - 1) + 1){
-        let spot = gridSize * (gridSize - 1) + 1;
-        indexCheck = [spot + 1, spot - gridSize, spot - gridSize + 1];
-    }
-    
-    // If bomb is bottom right
-    else if (location.id == gridSize * gridSize){
-        let spot = gridSize * gridSize;
-        indexCheck = [spot - 1, spot - gridSize, spot - gridSize - 1];
-    }
-
-    // if bomb is in first row
-    else if (location.getAttribute('data-row') == 1){
-        let spot = parseInt(location.id);
-        indexCheck = [spot + 1, spot - 1, spot + gridSize - 1, spot + gridSize, spot + gridSize + 1];
-    }
-
-    // if bomb is it the bottom row
-    else if (location.getAttribute('data-row') == gridSize){
-        let spot = parseInt(location.id);
-        indexCheck = [spot + 1, spot - 1, spot - gridSize + 1, spot - gridSize, spot - gridSize - 1];
-    }
-
-    // if bomb in first column
-    else if (location.getAttribute('data-column') == 1){
-        let spot = parseInt(location.id);
-         indexCheck = [spot + 1, spot - gridSize, spot + gridSize, spot + gridSize + 1, spot - gridSize + 1 ];
-    }
-
-    // if bomb in last column
-    else if (location.getAttribute('data-column') == gridSize){
-        let spot = parseInt(location.id);
-        indexCheck = [spot - 1, spot - gridSize, spot + gridSize, spot + gridSize - 1, spot - gridSize - 1 ];
-    }
-
-        // bomb somewhere in center
-    else {
-        let spot = parseInt(location.id);
-        console.log(spot);
-        indexCheck = [spot + 1, spot - 1, spot + gridSize, spot - gridSize, spot + gridSize - 1, spot + gridSize + 1, spot - gridSize - 1, spot - gridSize + 1];
-        console.log(indexCheck);
-    }
-
-    for (let i = 0; i < indexCheck.length; i++){
-        if (document.getElementById(indexCheck[i]).value == 'b'){
-            continue;
-        }
-        else if (isNaN(document.getElementById(indexCheck[i]).value)){
-            document.getElementById(indexCheck[i]).value = 1;
-        }
-        else{
-            document.getElementById(indexCheck[i]).value++;
+    console.log('populating');
+    for (let i = (parseInt(location.getAttribute('data-row')) - 1); i <= (parseInt(location.getAttribute('data-row')) + 1); i++){
+        for (let j = (parseInt(location.getAttribute('data-column')) - 1); j <= (parseInt(location.getAttribute('data-column')) + 1); j++){         
+            let idCheck = gridSize * (i-1) + j;
+            if (document.getElementById(idCheck) == null){
+                continue;
+            }
+            console.log(`id: ${document.getElementById(idCheck)}`);
+            if (document.getElementById(idCheck).value == 'b'){
+                continue;
+            }
+            else if (document.getElementById(idCheck).value == ''){
+                document.getElementById(idCheck).value = 1;
+            }
+            else{
+                document.getElementById(idCheck).value ++;
+            }
         }
     }
-    return;
 }
