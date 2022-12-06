@@ -17,7 +17,6 @@ function newGame(){
 
 
 function squareClicked(){
-
     this.innerHTML = this.value;
     console.log(this.value);
 }
