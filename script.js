@@ -74,76 +74,6 @@ function getNumber(id){
     }
 }
 
-
-function getNumber1(id){
-    let clickedSquare = document.getElementById(id);
-    if (clickedSquare.value >= 1){
-        clickedSquare.innerHTML = clickedSquare.value;
-        clickedSquare.style.backgroundColor = 'grey';
-        return;
-    }
-    else if (clickedSquare.value == 'b'){
-        clickedSquare.innerHTML = clickedSquare.value;
-        clickedSquare.style.backgroundColor = 'black';
-        clickedSquare.style.color='red';
-        return;
-    }
-    /*
-    else {
-        let indexes;
-        console.log(`id: ${clickedSquare.id}`);
-        // if clicked square is top left
-        if (clickedSquare.id == 1){
-            indexes = [1 + 1, 1 + gridSize, 2 + gridSize];
-        }
-        // if clicked square is top right
-        else if (clickedSquare.id == gridSize){
-            indexes = [gridSize - 1, gridSize + gridSize, (gridSize - 1) + gridSize];
-        }
-        // if clicked square is bottom left
-        else if (clickedSquare.id == gridSize * (gridSize - 1) + 1){
-            let spot = gridSize * (gridSize - 1) + 1;
-            indexes = [spot + 1, spot - gridSize, spot - (gridSize + 1)];
-        } 
-        // if clicked square is bottom right
-        else if (clickedSquare.id == gridSize * gridSize){
-            let spot = gridSize * gridSize;
-            indexes = [spot - 1, spot - gridSize, spot - gridSize - 1];
-        }
-        // if clicked square is top row
-        else if (clickedSquare.getAttribute('data-row') == 1){
-            let spot = parseInt(clickedSquare.id);
-            indexes = [spot + 1, spot - 1, spot + gridSize - 1, spot + gridSize, spot + gridSize + 1];
-        }
-        // if clicked square is bottom row
-        else if (clickedSquare.getAttribute('data-row') == gridSize){
-            let spot = parseInt(clickedSquare.id);
-            indexes = [spot + 1, spot - 1, spot - gridSize + 1, spot - gridSize, spot - gridSize - 1];
-        }
-        // if clicked square is first column
-        else if (clickedSquare.getAttribute('data-column') == 1){
-            let spot = parseInt(clickedSquare.id);
-            indexes = [spot + 1, spot - gridSize, spot + gridSize, spot + gridSize + 1, spot - gridSize + 1 ];
-        }
-        // if clicked square is last column
-        else if (clickedSquare.getAttribute('data-column') == gridSize){
-            let spot = parseInt(clickedSquare.id);
-            indexes = [spot - 1, spot - gridSize, spot + gridSize, spot + gridSize - 1, spot - gridSize - 1 ];
-        }
-        // if square in middle 
-        else{
-            let spot = parseInt(clickedSquare.id);
-            console.log(spot);
-            indexes = [spot + 1, spot - 1, spot + gridSize, spot - gridSize, spot + gridSize - 1, spot + gridSize + 1, spot - gridSize - 1, spot - gridSize + 1];
-        }
-
-        for (let i = 0; i < indexes.length; i++){
-            console.log(`indexes: ${indexes}`);
-            getNumber(indexes[i]);
-        }
-    } */
-}
-
 function createSquares(gridSize){
     let squares;
     let column;
@@ -196,8 +126,15 @@ function createNumbers(){
 
 function populateNumbers(location){
     console.log('populating');
-    for (let i = (parseInt(location.getAttribute('data-row')) - 1); i <= (parseInt(location.getAttribute('data-row')) + 1); i++){
-        for (let j = (parseInt(location.getAttribute('data-column')) - 1); j <= (parseInt(location.getAttribute('data-column')) + 1); j++){         
+    row: for (let i = (parseInt(location.getAttribute('data-row')) - 1); i <= (parseInt(location.getAttribute('data-row')) + 1); i++){
+        column: for (let j = (parseInt(location.getAttribute('data-column')) - 1); j <= (parseInt(location.getAttribute('data-column')) + 1); j++){         
+            if (i < 1 || i > 16){
+                continue row;
+            }
+            if (j < 1 || j > 16){
+                continue column;
+            }
+            
             let idCheck = gridSize * (i-1) + j;
             if (document.getElementById(idCheck) == null){
                 continue;
