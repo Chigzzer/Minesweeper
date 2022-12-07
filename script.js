@@ -17,20 +17,50 @@ function newGame(){
     gridSquares = document.querySelectorAll('.square');
     createBombs(bombNumber);
     createNumbers();
-    gridSquares.forEach(element => element.addEventListener('click', squareClicked));
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    gridSquares.forEach(element => element.addEventListener('click', e =>{
+
+        console.log(e);
+        if (e.button == 0 && e.ctrlKey){
+            console.log(e);
+            flagSelected(e.explicitOriginalTarget);
+        }
+        else if( e.button == 0){
+            console.log(e);
+            squareClicked(e.explicitOriginalTarget);
+        }
+    }
+    ))
     //gridSquares.forEach(element, squareClicked);
 }
 
+function flagSelected(event){
+    let flagSquare = document.getElementById(event.id);
+    if (flagSquare.getAttribute('data-clicked') == 'true'){
+        return;
+    }
+    if (flagSquare.getAttribute('data-flagged') == 'true'){
+        flagSquare.innerText = '';
+        flagSquare.setAttribute('data-flagged', 'false');
+    }
+    else{
+        flagSquare.setAttribute('data-flagged', 'true');
+        flagSquare.innerText = 'f';
+    }
+    return;
 
-function squareClicked(){
-    getNumber(this.id);
-    console.log(this);
+}
+
+function squareClicked(event){
+    getNumber(event.id);
+    console.log(event);
     return;
 }
 
 
 function getNumber(id){
     let clickedSquare = document.getElementById(id);
+    clickedSquare.setAttribute('data-clicked', 'true');
     if (idStack.includes(id)){
         return;
     }
@@ -40,10 +70,11 @@ function getNumber(id){
         clickedSquare.style.backgroundColor = 'grey';
         return;
     }
-    else if (clickedSquare.value == 'b'){
+    else if (clickedSquare.getAttribute('data-bomb') == 'true'){
         clickedSquare.innerHTML = clickedSquare.value;
         clickedSquare.style.backgroundColor = 'black';
         clickedSquare.style.color='red';
+        clickedSquare.innerText='b';
         return;
     }
     else{
@@ -103,15 +134,21 @@ function createSquares(gridSize){
 
 function createBombs(number){
     console.log('generating bombs');
-    for (let i = 0; i < number; i++){
+    let i = 0;
+    while (i < number){
         let columnIndex = Math.floor(Math.random() * gridSize) + 1; 
         let rowIndex = Math.floor(Math.random() * gridSize) + 1;
-        let bombSquareIndex = ((gridSize - 1) * columnIndex) + rowIndex; 
-        let bombSquare = document.getElementById(bombSquareIndex); 
-        bombSquare.value = 'b';
+        let bombSquareIndex = (gridSize * (rowIndex - 1) + columnIndex);
+        if (bombLocations.includes(bombSquareIndex)){
+            continue;
+        }
+        let bombSquare = document.getElementById(bombSquareIndex);
+        bombSquare.setAttribute('data-bomb', 'true');
         bombSquare.style.backgroundColor = 'pink';
         bombLocations.push(bombSquareIndex);
+        i++
     }
+    console.log(` Generated ${bombLocations.length} bombs at ${bombLocations}`);
     return;
 }
 
@@ -125,7 +162,7 @@ function createNumbers(){
 }
 
 function populateNumbers(location){
-    console.log('populating');
+    // console.log(`populating location ${location.id}`);
     row: for (let i = (parseInt(location.getAttribute('data-row')) - 1); i <= (parseInt(location.getAttribute('data-row')) + 1); i++){
         column: for (let j = (parseInt(location.getAttribute('data-column')) - 1); j <= (parseInt(location.getAttribute('data-column')) + 1); j++){         
             if (i < 1 || i > 16){
@@ -139,15 +176,17 @@ function populateNumbers(location){
             if (document.getElementById(idCheck) == null){
                 continue;
             }
-            else if (document.getElementById(idCheck).value == 'b'){
+            else if (document.getElementById(idCheck).getAttribute('data-bomb') == 'true'){
                 continue;
             }
             else if (document.getElementById(idCheck).value == ''){
                 document.getElementById(idCheck).value = 1;
+                
             }
             else{
                 document.getElementById(idCheck).value ++;
             }
         }
     }
+    return;
 }
