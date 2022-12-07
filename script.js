@@ -22,8 +22,14 @@ function newGame(){
 
         console.log(e);
         if (e.button == 0 && e.ctrlKey){
-            console.log(e);
-            flagSelected(e.explicitOriginalTarget);
+            console.log("HERE");
+            console.log(e.explicitOriginalTarget.parentNode);
+            if (e.explicitOriginalTarget.parentNode.getAttribute('data-flagged') == 'true'){
+                flagSelected(e.explicitOriginalTarget.parentNode);
+            }
+            else{
+                flagSelected(e.explicitOriginalTarget);
+            }
         }
         else if( e.button == 0){
             console.log(e);
@@ -35,24 +41,36 @@ function newGame(){
 }
 
 function flagSelected(event){
+    console.log(event.id);
     let flagSquare = document.getElementById(event.id);
     if (flagSquare.getAttribute('data-clicked') == 'true'){
         return;
     }
     if (flagSquare.getAttribute('data-flagged') == 'true'){
-        flagSquare.innerText = '';
+        flagSquare.removeChild(flagSquare.lastChild);
         flagSquare.setAttribute('data-flagged', 'false');
     }
     else{
         flagSquare.setAttribute('data-flagged', 'true');
-        flagSquare.innerText = 'f';
+        flagSquare.innerHTML = `<img id=${event.id}+'_flag' src='flag.png' alt='flag icon' />`;
     }
     return;
 
 }
 
 function squareClicked(event){
-    getNumber(event.id);
+    console.log("HERE");
+    console.log(event.altText);
+    if (event.getAttribute('data-clicked') == 'true'){
+        return;
+    }
+
+    if (event.getAttribute('data-flagged') == 'true'){
+        return;
+    }
+    else{
+        getNumber(event.id);
+    }
     console.log(event);
     return;
 }
@@ -74,7 +92,7 @@ function getNumber(id){
         clickedSquare.innerHTML = clickedSquare.value;
         clickedSquare.style.backgroundColor = 'black';
         clickedSquare.style.color='red';
-        clickedSquare.innerText='b';
+        clickedSquare.innerHTML = "<img src='bomb.png' alt='bomb icon' />";
         return;
     }
     else{
