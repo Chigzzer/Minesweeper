@@ -4,7 +4,7 @@ let padSize = 440;
 let gridSize = 16;
 let bombNumber = 10;
 let bombLocations = [];
-
+let idStack = [];
 
 
 newGame();
@@ -28,7 +28,6 @@ function squareClicked(){
 
 function getNumber(id){
     let clickedSquare = document.getElementById(id);
-    let idStack = [];
     if (clickedSquare.value >= 1){
         clickedSquare.innerHTML = clickedSquare.value;
         clickedSquare.style.backgroundColor = 'grey';
@@ -45,7 +44,7 @@ function getNumber(id){
             for (let j = (parseInt(clickedSquare.getAttribute('data-column')) - 1); j <= (parseInt(clickedSquare.getAttribute('data-column')) + 1); j++){         
                 let idCheck = gridSize * (i-1) + j;
                 console.log(idCheck);
-                /*
+                
                 if (document.getElementById(idCheck) == null){
                     continue;
                 }
@@ -57,8 +56,9 @@ function getNumber(id){
                         console.log(idCheck);
                         idStack.push(idCheck);
                         getNumber(idCheck);
+                        return;
                     }
-                }*/
+                }
             }
         }
     }
