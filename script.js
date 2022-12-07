@@ -3,13 +3,15 @@ container = document.querySelector('.container');
 let gridSquares;
 let padSize = 440;
 let gridSize = 16;
-let bombNumber = 10;
+let bombNumber = 40;
 let bombLocations = [];
 let idStack = [];
 
 
 newGame();
 function newGame(){
+    bombLocations = [];
+    idStack = [];
     container.innerHTML = '';
     createSquares(gridSize);
     gridSquares = document.querySelectorAll('.square');
@@ -29,6 +31,10 @@ function squareClicked(){
 
 function getNumber(id){
     let clickedSquare = document.getElementById(id);
+    if (idStack.includes(id)){
+        return;
+    }
+    idStack.push(id);
     if (clickedSquare.value >= 1){
         clickedSquare.innerHTML = clickedSquare.value;
         clickedSquare.style.backgroundColor = 'grey';
@@ -41,6 +47,7 @@ function getNumber(id){
         return;
     }
     else{
+        clickedSquare.style.backgroundColor='yellow';
         for (let i = (parseInt(clickedSquare.getAttribute('data-row')) - 1); i <= (parseInt(clickedSquare.getAttribute('data-row')) + 1); i++){
             if (i < 1 || i > 16){ continue;}
             for (let j = (parseInt(clickedSquare.getAttribute('data-column')) - 1); j <= (parseInt(clickedSquare.getAttribute('data-column')) + 1); j++){         
@@ -58,13 +65,12 @@ function getNumber(id){
                     }
                     else{
                         console.log(idCheck);
-                        idStack.push(id);
                         getNumber(idCheck);
-                        return;
                     }
                 }
             }
         }
+        return;
     }
 }
 
