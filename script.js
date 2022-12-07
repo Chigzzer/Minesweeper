@@ -1,4 +1,5 @@
-const container = document.querySelector('.container');
+
+container = document.querySelector('.container');
 let gridSquares;
 let padSize = 440;
 let gridSize = 16;
@@ -41,9 +42,12 @@ function getNumber(id){
     }
     else{
         for (let i = (parseInt(clickedSquare.getAttribute('data-row')) - 1); i <= (parseInt(clickedSquare.getAttribute('data-row')) + 1); i++){
+            if (i < 1 || i > 16){ continue;}
             for (let j = (parseInt(clickedSquare.getAttribute('data-column')) - 1); j <= (parseInt(clickedSquare.getAttribute('data-column')) + 1); j++){         
+                if (j < 1 || j > 16) {continue;}            
                 let idCheck = gridSize * (i-1) + j;
                 console.log(idCheck);
+                if (idCheck == id){continue;}
                 
                 if (document.getElementById(idCheck) == null){
                     continue;
@@ -54,7 +58,7 @@ function getNumber(id){
                     }
                     else{
                         console.log(idCheck);
-                        idStack.push(idCheck);
+                        idStack.push(id);
                         getNumber(idCheck);
                         return;
                     }
