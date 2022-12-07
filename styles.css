@@ -22,4 +22,7 @@ body{
     background-color: white;
     border: 1px black solid;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }   
