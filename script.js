@@ -41,18 +41,23 @@ function newGame(){
 }
 
 function flagSelected(event){
-    console.log(event.id);
+    console.log(event.getAttribute('data-clicked'));
     let flagSquare = document.getElementById(event.id);
-    if (flagSquare.getAttribute('data-clicked') == 'true'){
+
+    if (flagSquare == null){
         return;
     }
-    if (flagSquare.getAttribute('data-flagged') == 'true'){
+
+    else if (flagSquare.getAttribute('data-clicked') == 'true'){
+        return;
+    }
+    else if (flagSquare.getAttribute('data-flagged') == 'true'){
         flagSquare.removeChild(flagSquare.lastChild);
         flagSquare.setAttribute('data-flagged', 'false');
     }
     else{
         flagSquare.setAttribute('data-flagged', 'true');
-        flagSquare.innerHTML = `<img id=${event.id}+'_flag' src='flag.png' alt='flag icon' />`;
+        flagSquare.innerHTML = `<img id=${event.id} src='flag.png' alt='flag icon' />`;
     }
     return;
 
@@ -60,7 +65,7 @@ function flagSelected(event){
 
 function squareClicked(event){
     console.log("HERE");
-    console.log(event.altText);
+    console.log(event);
     if (event.getAttribute('data-clicked') == 'true'){
         return;
     }
@@ -69,10 +74,15 @@ function squareClicked(event){
         return;
     }
     else{
+        if( event.id == ""){
+            console.log("HERE2");
+            console.log(event.parentNode.id);
+            getNumber(event.parentNode.id)
+            return
+        }
         getNumber(event.id);
+        return
     }
-    console.log(event);
-    return;
 }
 
 
