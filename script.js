@@ -142,6 +142,10 @@ function getNumber(id){
         gameOver('lose');
     
     }
+    else if (clickedSquare.getAttribute('data-flagged') == 'true'){
+        return;
+    
+    }
     else{
         clickedSquare.style.backgroundColor='yellow';
         for (let i = (parseInt(clickedSquare.getAttribute('data-row')) - 1); i <= (parseInt(clickedSquare.getAttribute('data-row')) + 1); i++){
@@ -154,7 +158,7 @@ function getNumber(id){
                     continue;
                 }
                 else{
-                    if (idStack.includes(idCheck) == true){
+                    if (idStack.includes(idCheck) == true ){
                         continue;
                     }
                     else{
