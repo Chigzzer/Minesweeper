@@ -1,24 +1,26 @@
 
-container = document.querySelector('.container');
-autoFill = document.querySelector('#autoFill');
+const container = document.querySelector('.container');
+const autoFill = document.querySelector('#autoFill');
+const bombCount = document.querySelector('#bombCount');
 
 let gridSquares;
 let padSize = 440;
 let gridSize = 16;
-let bombNumber = 2;
+let bombNumber = 40;
 let bombLocations = [];
 let idStack = [];
 let gameFinished = false;
 
 newGame();
-console.log();
 function newGame(){
+    console.log("New game initiated");
     console.log('starting game');
     bombLocations = [];
     idStack = [];
     container.innerHTML = '';
     createSquares(gridSize);
     gridSquares = document.querySelectorAll('.square');
+    bombCount.innerText=`Bomb Count: ${bombNumber}`;
     createBombs(bombNumber);
     createNumbers();
     console.log(gridSquares);
@@ -175,7 +177,6 @@ function getNumber(id){
     }
     else{
         clickedSquare.style.backgroundColor='yellow';
-        
         for (let i = (parseInt(clickedSquare.getAttribute('data-row')) - 1); i <= (parseInt(clickedSquare.getAttribute('data-row')) + 1); i++){
             if (i < 1 || i > 16){ continue;}
             for (let j = (parseInt(clickedSquare.getAttribute('data-column')) - 1); j <= (parseInt(clickedSquare.getAttribute('data-column')) + 1); j++){         
@@ -233,7 +234,7 @@ function createSquares(gridSize){
 }
 
 function createBombs(number){
-    console.log('generating bombs');
+    console.log('Generating bombs');
     let i = 0;
     while (i < number){
         let columnIndex = Math.floor(Math.random() * gridSize) + 1; 
@@ -248,12 +249,11 @@ function createBombs(number){
         bombLocations.push(bombSquareIndex);
         i++
     }
-    console.log(` Generated ${bombLocations.length} bombs at ${bombLocations}`);
     return;
 }
 
 function createNumbers(){
-    console.log(bombLocations);
+    console.log("Generating numbers around bombs");
     for (let i = 0; i < bombLocations.length; i++){
         let bombLocation = document.getElementById(bombLocations[i]);
         populateNumbers(bombLocation);
