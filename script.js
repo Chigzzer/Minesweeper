@@ -1,5 +1,7 @@
 
 container = document.querySelector('.container');
+autoFill = document.querySelector('#autoFill');
+
 let gridSquares;
 let padSize = 440;
 let gridSize = 16;
@@ -7,6 +9,7 @@ let bombNumber = 2;
 let bombLocations = [];
 let idStack = [];
 let gameFinished = false;
+let autoPressed = false;
 
 
 newGame();
@@ -22,10 +25,35 @@ function newGame(){
     createNumbers();
     console.log(gridSquares);
     gridSquares.forEach(element => element.addEventListener('click', eventClicked));
+    autoFill.addEventListener('click', autoFillSquares);
     //gridSquares.forEach(element, squareClicked);
     console.log('TREST');
     return;
 }
+
+function autoFillSquares(){
+    console.log('run');
+    for (let i = 1; i <= (gridSize*gridSize); i++){
+      let tempSquare = document.getElementById(i);
+      if (tempSquare.getAttribute('data-flagged') == 'true'){
+        continue;
+      }
+      if (tempSquare.getAttribute('data-bomb') == 'true'){
+        tempSquare.style.backgroundColor = 'black';
+        tempSquare.innerHTML = "<img src='bomb.png' alt='bomb icon' />";
+        gameOver('lose');
+        return;
+      }
+      else{
+        tempSquare.style.backgroundColor = 'yellow';
+      }
+    }
+    gameOver('win');
+    return;
+}
+
+
+
 
 function eventClicked(e){
 
@@ -140,6 +168,7 @@ function getNumber(id){
         clickedSquare.style.color='red';
         clickedSquare.innerHTML = "<img src='bomb.png' alt='bomb icon' />";
         gameOver('lose');
+        return;
     
     }
     else if (clickedSquare.getAttribute('data-flagged') == 'true'){
@@ -148,6 +177,7 @@ function getNumber(id){
     }
     else{
         clickedSquare.style.backgroundColor='yellow';
+        
         for (let i = (parseInt(clickedSquare.getAttribute('data-row')) - 1); i <= (parseInt(clickedSquare.getAttribute('data-row')) + 1); i++){
             if (i < 1 || i > 16){ continue;}
             for (let j = (parseInt(clickedSquare.getAttribute('data-column')) - 1); j <= (parseInt(clickedSquare.getAttribute('data-column')) + 1); j++){         
@@ -167,6 +197,7 @@ function getNumber(id){
                 }
             }
         }
+        
 
     }
      console.log(`stack: ${idStack}`);

@@ -4,6 +4,7 @@ body{
 
 .mainBody{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     flex: 1;
@@ -15,6 +16,7 @@ body{
     display: flex;
     border: 2px solid black;
     flex-wrap: wrap;
+    flex-direction: column;
  
 }
 
@@ -26,3 +28,18 @@ body{
     justify-content: center;
     align-items: center;
 }   
+
+#autoFinish{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+#autoComplete{
+    display: flex;
+    gap: 5px;
+    width: 440px;
+}
