@@ -119,12 +119,15 @@ function gameOver(argument){
 
 function getNumber(id){
     let clickedSquare = document.getElementById(id);
+    let idInt =parseInt(id);
     clickedSquare.setAttribute('data-clicked', 'true');
-    if (idStack.includes(id)){
+    console.log(idStack);
+    console.log(idStack.includes(idInt));
+    if (idStack.includes(idInt)){
         return;
     }
     else{
-        idStack.push(id);
+        idStack.push(idInt);
     }
     if (clickedSquare.value >= 1){
         clickedSquare.innerHTML = clickedSquare.value;
@@ -162,9 +165,8 @@ function getNumber(id){
         }
 
     }
-    // console.log(`stack: ${idStack}`);
-    idStack2 = [...new Set(idStack)];
-    if (idStack2.length + bombNumber > gridSize * gridSize){
+     console.log(`stack: ${idStack}`);
+    if (idStack.length + bombNumber == gridSize * gridSize){
         gameOver('win');
     }
     return;
