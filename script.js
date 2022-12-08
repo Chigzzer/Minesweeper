@@ -9,8 +9,6 @@ let bombNumber = 2;
 let bombLocations = [];
 let idStack = [];
 let gameFinished = false;
-let autoPressed = false;
-
 
 newGame();
 console.log();
