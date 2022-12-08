@@ -3,7 +3,7 @@ container = document.querySelector('.container');
 let gridSquares;
 let padSize = 440;
 let gridSize = 16;
-let bombNumber = 40;
+let bombNumber = 2;
 let bombLocations = [];
 let idStack = [];
 let gameFinished = false;
@@ -28,6 +28,7 @@ function newGame(){
 }
 
 function eventClicked(e){
+
     console.log(e);
     if (e.button == 0 && e.ctrlKey){
         console.log("HERE");
@@ -90,7 +91,12 @@ function squareClicked(event){
             getNumber(event.parentNode.id)
             return
         }
-        getNumber(event.id);
+        if (idStack.includes(event.id)){
+            return;
+        }
+        else{
+            getNumber(event.id);
+        }
         return
     }
 }
@@ -102,6 +108,11 @@ function gameOver(argument){
         gridSquares.forEach(element => element.removeEventListener('click', eventClicked));
         return; 
     }
+    else{
+        console.log('win');
+        gameFinished = true;
+        gridSquares.forEach(element => element.removeEventListener('click', eventClicked));
+    }
 }
 
 
@@ -112,11 +123,13 @@ function getNumber(id){
     if (idStack.includes(id)){
         return;
     }
-    idStack.push(id);
+    else{
+        idStack.push(id);
+    }
     if (clickedSquare.value >= 1){
         clickedSquare.innerHTML = clickedSquare.value;
         clickedSquare.style.backgroundColor = 'grey';
-        return;
+     
     }
     else if (clickedSquare.getAttribute('data-bomb') == 'true'){
         clickedSquare.innerHTML = clickedSquare.value;
@@ -124,7 +137,7 @@ function getNumber(id){
         clickedSquare.style.color='red';
         clickedSquare.innerHTML = "<img src='bomb.png' alt='bomb icon' />";
         gameOver('lose');
-        return;
+    
     }
     else{
         clickedSquare.style.backgroundColor='yellow';
@@ -133,9 +146,7 @@ function getNumber(id){
             for (let j = (parseInt(clickedSquare.getAttribute('data-column')) - 1); j <= (parseInt(clickedSquare.getAttribute('data-column')) + 1); j++){         
                 if (j < 1 || j > 16) {continue;}            
                 let idCheck = gridSize * (i-1) + j;
-                console.log(idCheck);
                 if (idCheck == id){continue;}
-                
                 if (document.getElementById(idCheck) == null){
                     continue;
                 }
@@ -144,14 +155,19 @@ function getNumber(id){
                         continue;
                     }
                     else{
-                        console.log(idCheck);
                         getNumber(idCheck);
                     }
                 }
             }
         }
-        return;
+
     }
+    // console.log(`stack: ${idStack}`);
+    idStack2 = [...new Set(idStack)];
+    if (idStack2.length + bombNumber > gridSize * gridSize){
+        gameOver('win');
+    }
+    return;
 }
 
 function createSquares(gridSize){
