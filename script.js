@@ -6,10 +6,13 @@ let gridSize = 16;
 let bombNumber = 40;
 let bombLocations = [];
 let idStack = [];
+let gameFinished = false;
 
 
 newGame();
+console.log();
 function newGame(){
+    console.log('starting game');
     bombLocations = [];
     idStack = [];
     container.innerHTML = '';
@@ -17,27 +20,34 @@ function newGame(){
     gridSquares = document.querySelectorAll('.square');
     createBombs(bombNumber);
     createNumbers();
-    document.addEventListener('contextmenu', event => event.preventDefault());
-    gridSquares.forEach(element => element.addEventListener('click', e =>{
+    console.log(gridSquares);
+    gridSquares.forEach(element => element.addEventListener('click', eventClicked));
+    //gridSquares.forEach(element, squareClicked);
+    console.log('TREST');
+    return;
+}
 
-        console.log(e);
-        if (e.button == 0 && e.ctrlKey){
-            console.log("HERE");
-            console.log(e.explicitOriginalTarget.parentNode);
-            if (e.explicitOriginalTarget.parentNode.getAttribute('data-flagged') == 'true'){
-                flagSelected(e.explicitOriginalTarget.parentNode);
-            }
-            else{
-                flagSelected(e.explicitOriginalTarget);
-            }
+function eventClicked(e){
+    console.log(e);
+    if (e.button == 0 && e.ctrlKey){
+        console.log("HERE");
+        console.log(e.explicitOriginalTarget.parentNode);
+        if (e.explicitOriginalTarget.parentNode.getAttribute('data-flagged') == 'true'){
+            flagSelected(e.explicitOriginalTarget.parentNode);
         }
-        else if( e.button == 0){
-            console.log(e);
-            squareClicked(e.explicitOriginalTarget);
+        else{
+            flagSelected(e.explicitOriginalTarget);
         }
     }
-    ))
-    //gridSquares.forEach(element, squareClicked);
+    else if( e.button == 0){
+        console.log(e);
+        squareClicked(e.explicitOriginalTarget);
+    }
+    console.log(gameFinished);
+    if (gameFinished == true){
+        return;
+    }
+    return
 }
 
 function flagSelected(event){
@@ -85,6 +95,16 @@ function squareClicked(event){
     }
 }
 
+function gameOver(argument){
+    if (argument == 'lose'){
+        console.log('Game ove you lost');
+        gameFinished = true;
+        gridSquares.forEach(element => element.removeEventListener('click', eventClicked));
+        return; 
+    }
+}
+
+
 
 function getNumber(id){
     let clickedSquare = document.getElementById(id);
@@ -103,6 +123,7 @@ function getNumber(id){
         clickedSquare.style.backgroundColor = 'black';
         clickedSquare.style.color='red';
         clickedSquare.innerHTML = "<img src='bomb.png' alt='bomb icon' />";
+        gameOver('lose');
         return;
     }
     else{
@@ -141,7 +162,7 @@ function createSquares(gridSize){
     const border = 1;
     container.style.width = padSize + 'px'; 
     container.style.height = padSize + 'px'; 
-
+    console.log('Creating squares');
     for (let i = 1; i <= gridSize; i++){
         for (let j = 1; j <= gridSize; j++){
             let square = document.createElement('div');
