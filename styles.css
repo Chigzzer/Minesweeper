@@ -16,6 +16,21 @@ body{
     background-color: aqua;
 }
 
+.hidden{
+    display: none;
+}
+
+.curtain{
+    transform: rotate(-45deg);
+    z-index: 100;   
+
+}
+
+.key{
+    font-weight: 900;
+    font-style: italic;
+}
+
 #newGameButtons{
     display: flex;
     flex-direction: column;

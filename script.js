@@ -4,19 +4,19 @@ const autoFill = document.querySelector('#autoFill');
 const bombCount = document.querySelector('#bombCount');
 const difficultyLevels = document.querySelectorAll('.difficultyButtons');
 const newGameButton = document.querySelector('#levelSubmit');
+const curtain = document.querySelector('.curtain');
 
 let gridSquares;
 let level = 1;
 let padSize = 440;
 let gridSize = 16;
-let bombNumber;
+let bombNumber = 0;
 let bombLocations = [];
 let idStack = [];
 let gameFinished = false;
 
 difficultyLevels.forEach(element => element.addEventListener('click', setLevel));
 newGameButton.addEventListener('click', newGame);
-
 container.style.width = padSize + 'px'; 
 container.style.height = padSize + 'px';
 
@@ -45,7 +45,9 @@ function newGame(){
     console.log('starting game');
     bombLocations = [];
     idStack = [];
-    bombNumber = Math.floor(Math.random() * (gridSize * gridSize));
+    if (bombNumber == 0){
+        bombNumber = Math.floor(Math.random() * (gridSize * gridSize));
+    }
     container.innerHTML = '';
     createSquares(gridSize);
     gridSquares = document.querySelectorAll('.square');
@@ -126,7 +128,6 @@ function flagSelected(event){
         flagSquare.innerHTML = `<img id=${event.id} src='flag.png' alt='flag icon' />`;
     }
     return;
-
 }
 
 function squareClicked(event){
@@ -157,8 +158,9 @@ function squareClicked(event){
 }
 
 function gameOver(argument){
+    curtain.classList.remove('hidden');
     if (argument == 'lose'){
-        console.log('Game ove you lost');
+        console.log('Game over you lost');
         gameFinished = true;
         gridSquares.forEach(element => element.removeEventListener('click', eventClicked));
         return; 
@@ -167,10 +169,9 @@ function gameOver(argument){
         console.log('win');
         gameFinished = true;
         gridSquares.forEach(element => element.removeEventListener('click', eventClicked));
+        return;
     }
 }
-
-
 
 function getNumber(id){
     let clickedSquare = document.getElementById(id);
