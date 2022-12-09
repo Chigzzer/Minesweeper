@@ -12,6 +12,10 @@ body{
     gap: 12px;
 }
 
+.clicked{
+    background-color: aqua;
+}
+
 #newGameButtons{
     display: flex;
     flex-direction: column;

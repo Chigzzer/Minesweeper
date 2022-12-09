@@ -2,8 +2,10 @@
 const container = document.querySelector('.container');
 const autoFill = document.querySelector('#autoFill');
 const bombCount = document.querySelector('#bombCount');
+const difficultyLevels = document.querySelectorAll('.difficultyButtons')
 
 let gridSquares;
+let level = 1;
 let padSize = 440;
 let gridSize = 16;
 let bombNumber = 40;
@@ -11,7 +13,18 @@ let bombLocations = [];
 let idStack = [];
 let gameFinished = false;
 
+difficultyLevels.forEach(element => element.addEventListener('click', setLevel));
+
 newGame();
+
+function setLevel(){
+    difficultyLevels.forEach(element => element.classList.remove('clicked'));
+    this.classList.add('clicked');
+    level = this.value;
+
+
+    console.log(this.value);
+}
 function newGame(){
     console.log("New game initiated");
     console.log('starting game');
