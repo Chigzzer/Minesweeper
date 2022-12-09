@@ -10,13 +10,20 @@
 <body>
     <h1 class="title">Minesweeper</h1>
     <div class="mainBody">
-        <div id="bombCount"></div>
-        <div class="container"></div>
-        <div id="autoFinish">
-            <div class="text">To flag: hole down <span class="key">CTRL</span> while clicking </div>
-            <div id="autoComplete">
-                <div class="text">If you think you flagged all the bombs, click the following button as a click all</div>
-                <div class="button"><button  id='autoFill' name="autoFill">Autofill</button></div>
+        <div id="newGameButtons">
+            <button id='easy' value="0" class="difficultyButtons">Easy</button>
+            <button id='med' value="1" class="difficultyButtons">Medium</button>
+            <button id='hard' value="21" class="difficultyButtons">Hard</button>
+        </div>
+        <div class="mainSection">
+            <div id="bombCount"></div>
+            <div class="container"></div>
+            <div id="autoFinish">
+                <div class="text">To flag: hole down <span class="key">CTRL</span> while clicking </div>
+                <div id="autoComplete">
+                    If you think you flagged all the bombs, click the following button as a click all <button  id='autoFill' name="autoFill">Autofill</button>
+                    
+                </div>
             </div>
         </div>
     </div>
