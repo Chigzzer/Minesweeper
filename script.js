@@ -2,26 +2,41 @@
 const container = document.querySelector('.container');
 const autoFill = document.querySelector('#autoFill');
 const bombCount = document.querySelector('#bombCount');
-const difficultyLevels = document.querySelectorAll('.difficultyButtons')
+const difficultyLevels = document.querySelectorAll('.difficultyButtons');
+const newGameButton = document.querySelector('#levelSubmit');
 
 let gridSquares;
 let level = 1;
 let padSize = 440;
 let gridSize = 16;
-let bombNumber = 40;
+let bombNumber;
 let bombLocations = [];
 let idStack = [];
 let gameFinished = false;
 
 difficultyLevels.forEach(element => element.addEventListener('click', setLevel));
+newGameButton.addEventListener('click', newGame);
 
-newGame();
+container.style.width = padSize + 'px'; 
+container.style.height = padSize + 'px';
+
 
 function setLevel(){
     difficultyLevels.forEach(element => element.classList.remove('clicked'));
     this.classList.add('clicked');
     level = this.value;
-
+    if (level == "0"){
+        bombNumber = Math.floor((gridSize * gridSize) * 0.1);
+    }
+    else if (level == "1"){
+        bombNumber = Math.floor((gridSize * gridSize) * 0.2);
+    }
+    else if (level == "2"){
+        bombNumber = Math.floor((gridSize * gridSize) * 0.3);
+    }
+    else{
+        bombNumber == 1;
+    }
 
     console.log(this.value);
 }
@@ -30,6 +45,7 @@ function newGame(){
     console.log('starting game');
     bombLocations = [];
     idStack = [];
+    bombNumber = Math.floor(Math.random() * (gridSize * gridSize));
     container.innerHTML = '';
     createSquares(gridSize);
     gridSquares = document.querySelectorAll('.square');
@@ -39,13 +55,11 @@ function newGame(){
     console.log(gridSquares);
     gridSquares.forEach(element => element.addEventListener('click', eventClicked));
     autoFill.addEventListener('click', autoFillSquares);
-    //gridSquares.forEach(element, squareClicked);
-    console.log('TREST');
     return;
 }
 
 function autoFillSquares(){
-    console.log('run');
+    console.log('Auto filling squares');
     for (let i = 1; i <= (gridSize*gridSize); i++){
       let tempSquare = document.getElementById(i);
       if (tempSquare.getAttribute('data-flagged') == 'true'){
@@ -227,6 +241,7 @@ function createSquares(gridSize){
     const border = 1;
     container.style.width = padSize + 'px'; 
     container.style.height = padSize + 'px'; 
+    container.innerHTML='';
     console.log('Creating squares');
     for (let i = 1; i <= gridSize; i++){
         for (let j = 1; j <= gridSize; j++){
