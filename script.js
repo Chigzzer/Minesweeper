@@ -1,5 +1,7 @@
 
 const container = document.querySelector('.container');
+const containerBox = document.querySelector('.containerBox');
+
 const autoFill = document.querySelector('#autoFill');
 const bombCount = document.querySelector('#bombCount');
 const difficultyLevels = document.querySelectorAll('.difficultyButtons');
@@ -11,6 +13,7 @@ let level = 1;
 let padSize = 440;
 let gridSize = 16;
 let bombNumber = 51;
+let flagCount = 0;
 let bombLocations = [];
 let idStack = [];
 let gameFinished = false;
@@ -18,7 +21,9 @@ let gameFinished = false;
 difficultyLevels.forEach(element => element.addEventListener('click', setLevel));
 newGameButton.addEventListener('click', newGame);
 container.style.width = padSize + 'px'; 
+containerBox.style.width = padSize + 'px'; 
 container.style.height = padSize + 'px';
+containerBox.style.height = padSize + 'px';
 
 
 function setLevel(){
@@ -51,7 +56,9 @@ function newGame(){
     console.log('starting game');
     bombLocations = [];
     idStack = [];
+    flagCount = 0;
     container.innerHTML = '';
+    curtain.classList.add('hidden');
     createSquares(gridSize);
     gridSquares = document.querySelectorAll('.square');
     bombCount.innerText=`Bomb Count: ${bombNumber}`;
@@ -60,12 +67,14 @@ function newGame(){
     console.log(gridSquares);
     gridSquares.forEach(element => element.addEventListener('click', eventClicked));
     autoFill.addEventListener('click', autoFillSquares);
+    document.querySelector(".flagCountText").innerText = `Flags remaining: ${bombNumber - flagCount}`;
     return;
 }
 
 function autoFillSquares(){
     console.log('Auto filling squares');
     for (let i = 1; i <= (gridSize*gridSize); i++){
+      if (flagCount != bombNumber) return;
       let tempSquare = document.getElementById(i);
       if (tempSquare.getAttribute('data-flagged') == 'true'){
         continue;
@@ -114,22 +123,24 @@ function eventClicked(e){
 function flagSelected(event){
     console.log(event.getAttribute('data-clicked'));
     let flagSquare = document.getElementById(event.id);
-
     if (flagSquare == null){
         return;
     }
-
     else if (flagSquare.getAttribute('data-clicked') == 'true'){
         return;
     }
     else if (flagSquare.getAttribute('data-flagged') == 'true'){
         flagSquare.removeChild(flagSquare.lastChild);
+        flagCount--;
         flagSquare.setAttribute('data-flagged', 'false');
     }
     else{
+        if (flagCount == bombNumber) return;
         flagSquare.setAttribute('data-flagged', 'true');
+        flagCount++;
         flagSquare.innerHTML = `<img id=${event.id} src='flag.png' alt='flag icon' />`;
     }
+    document.querySelector(".flagCountText").innerText = `Flags remaining: ${bombNumber - flagCount}`;
     return;
 }
 
@@ -161,16 +172,19 @@ function squareClicked(event){
 }
 
 function gameOver(argument){
+    curtain.innerHTML = '';
     curtain.classList.remove('hidden');
     if (argument == 'lose'){
         console.log('Game over you lost');
         gameFinished = true;
+        curtain.innerHTML = "<p> You Lost :( </p>";
         gridSquares.forEach(element => element.removeEventListener('click', eventClicked));
         return; 
     }
     else{
         console.log('win');
         gameFinished = true;
+        curtain.innerHTML = "<p> You Won </p>";
         gridSquares.forEach(element => element.removeEventListener('click', eventClicked));
         return;
     }
