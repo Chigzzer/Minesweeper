@@ -230,7 +230,7 @@ function spreadBlank(square, id){
     return;
 }
 
-
+// Functions to create the grid.
 function createSquares(gridSize){
     let squares;
     let column;
@@ -266,9 +266,7 @@ function createBombs(number){
         let columnIndex = Math.floor(Math.random() * gridSize) + 1; 
         let rowIndex = Math.floor(Math.random() * gridSize) + 1;
         let bombSquareIndex = (gridSize * (rowIndex - 1) + columnIndex);
-        if (bombLocations.includes(bombSquareIndex)){
-            continue;
-        }
+        if (bombLocations.includes(bombSquareIndex)) continue;
         let bombSquare = document.getElementById(bombSquareIndex);
         bombSquare.setAttribute('data-bomb', 'true');
         bombSquare.style.backgroundColor = 'pink';
@@ -278,6 +276,7 @@ function createBombs(number){
     return;
 }
 
+// FUnction that generates the numbers around the bomb
 function createNumbers(){
     console.log("Generating numbers around bombs");
     for (let i = 0; i < bombLocations.length; i++){
@@ -287,28 +286,17 @@ function createNumbers(){
     return;
 }
 
+// Generates numbers around bomb location
 function populateNumbers(location){
-    // console.log(`populating location ${location.id}`);
+    console.log(`populating location ${location.id}`);
     row: for (let i = (parseInt(location.getAttribute('data-row')) - 1); i <= (parseInt(location.getAttribute('data-row')) + 1); i++){
         column: for (let j = (parseInt(location.getAttribute('data-column')) - 1); j <= (parseInt(location.getAttribute('data-column')) + 1); j++){         
-            if (i < 1 || i > 16){
-                continue row;
-            }
-            if (j < 1 || j > 16){
-                continue column;
-            }
-            
+            if (i < 1 || i > 16) continue row;
+            if (j < 1 || j > 16) continue column;            
             let idCheck = gridSize * (i-1) + j;
-            if (document.getElementById(idCheck) == null){
-                continue;
-            }
-            else if (document.getElementById(idCheck).getAttribute('data-bomb') == 'true'){
-                continue;
-            }
-            else if (document.getElementById(idCheck).value == ''){
-                document.getElementById(idCheck).value = 1;
-                
-            }
+            if (document.getElementById(idCheck) == null) continue;
+            else if (document.getElementById(idCheck).getAttribute('data-bomb') == 'true') continue;
+            else if (document.getElementById(idCheck).value == '') document.getElementById(idCheck).value = 1;
             else{
                 document.getElementById(idCheck).value ++;
             }
