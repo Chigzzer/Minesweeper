@@ -70,20 +70,18 @@ function newGame(){
 function autoFillSquares(){
     console.log('Auto filling squares');
     for (let i = 1; i <= (gridSize*gridSize); i++){
-      if (flagCount != bombNumber) return;
-      let tempSquare = document.getElementById(i);
-      if (tempSquare.getAttribute('data-flagged') == 'true'){
-        continue;
-      }
-      if (tempSquare.getAttribute('data-bomb') == 'true'){
-        tempSquare.style.backgroundColor = 'black';
-        tempSquare.innerHTML = "<img src='bomb.png' alt='bomb icon' />";
-        gameOver('lose');
-        return;
-      }
-      else{
-        tempSquare.style.backgroundColor = 'yellow';
-      }
+        if (flagCount != bombNumber) return;
+        let tempSquare = document.getElementById(i);
+        if (tempSquare.getAttribute('data-flagged') == 'true') continue;
+        else if (tempSquare.getAttribute('data-bomb') == 'true'){
+            tempSquare.style.backgroundColor = 'black';
+            tempSquare.innerHTML = "<img src='bomb.png' alt='bomb icon' />";
+            gameOver('lose');
+            return;
+        }
+        else{
+            tempSquare.style.backgroundColor = 'yellow';
+        }
     }
     gameOver('win');
     return;
@@ -140,14 +138,15 @@ function gameOver(argument){
     //curtain.setAttribute("style", "display:felx");
     for ( let i = 1; i <= (gridSize * gridSize); i++){
         let tempSquare = document.getElementById(i);
-        if (tempSquare.getAttribute('data-bomb') == 'true'){
+        if (tempSquare.getAttribute('data-flagged') == 'true') continue;
+        else if (tempSquare.getAttribute('data-bomb') == 'true'){
             tempSquare.style.backgroundColor = 'black';
             tempSquare.innerHTML = "<img src='bomb.png' alt='bomb icon' />";
-          }
-          else{
-            tempSquare.style.backgroundColor = 'yellow';
+        }
+        else{
+            tempSquare.style.backgroundColor = 'white';
             tempSquare.innerText = tempSquare.value;
-          }
+        }
     }
     if (argument == 'lose'){
         console.log('Game over you lost');
