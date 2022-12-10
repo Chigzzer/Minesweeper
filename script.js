@@ -253,6 +253,7 @@ function createSquares(gridSize){
     container.innerHTML='';
     console.log('Creating squares');
     for (let i = 1; i <= gridSize; i++){
+        let row = document.createElement('div');
         for (let j = 1; j <= gridSize; j++){
             let square = document.createElement('div');
             square.classList.add('square');
@@ -262,10 +263,11 @@ function createSquares(gridSize){
             square.setAttribute('data-column', j);
             square.setAttribute('id', id);
             square.value = '';
-            container.appendChild(square);
+            row.appendChild(square);
             console.log(`added square column ${i} row ${j} id ${id}`);
             id++;
         }
+        container.appendChild(row);
     }
     return;
 }
