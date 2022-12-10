@@ -10,7 +10,7 @@ let gridSquares;
 let level = 1;
 let padSize = 440;
 let gridSize = 16;
-let bombNumber = 0;
+let bombNumber = 51;
 let bombLocations = [];
 let idStack = [];
 let gameFinished = false;
@@ -23,31 +23,34 @@ container.style.height = padSize + 'px';
 
 function setLevel(){
     difficultyLevels.forEach(element => element.classList.remove('clicked'));
-    this.classList.add('clicked');
-    level = this.value;
-    if (level == "0"){
+    
+    if (this.value == "0"){
         bombNumber = Math.floor((gridSize * gridSize) * 0.1);
+        this.classList.add('clicked');
     }
-    else if (level == "1"){
+    else if (this.value == "1"){
         bombNumber = Math.floor((gridSize * gridSize) * 0.2);
+        this.classList.add('clicked');
     }
-    else if (level == "2"){
+    else if (this.value == "2"){
         bombNumber = Math.floor((gridSize * gridSize) * 0.3);
+        this.classList.add('clicked');
     }
-    else{
-        bombNumber == 1;
-    }
+    /*else{
+        console.log("random");
+        console.log(Math.random() * (gridSize * gridSize));
+        bombNumber = Math.round(Math.random() * (gridSize * gridSize));
+        console.log(`bomnb number: ${bombNumber}`);
+    }*/
 
-    console.log(this.value);
+
+
 }
 function newGame(){
     console.log("New game initiated");
     console.log('starting game');
     bombLocations = [];
     idStack = [];
-    if (bombNumber == 0){
-        bombNumber = Math.floor(Math.random() * (gridSize * gridSize));
-    }
     container.innerHTML = '';
     createSquares(gridSize);
     gridSquares = document.querySelectorAll('.square');
