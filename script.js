@@ -74,8 +74,6 @@ function autoFillSquares(){
         let tempSquare = document.getElementById(i);
         if (tempSquare.getAttribute('data-flagged') == 'true') continue;
         else if (tempSquare.getAttribute('data-bomb') == 'true'){
-            tempSquare.style.backgroundColor = 'black';
-            tempSquare.innerHTML = "<img src='bomb.png' alt='bomb icon' />";
             gameOver('lose');
             return;
         }
@@ -138,7 +136,11 @@ function gameOver(argument){
     //curtain.setAttribute("style", "display:felx");
     for ( let i = 1; i <= (gridSize * gridSize); i++){
         let tempSquare = document.getElementById(i);
-        if (tempSquare.getAttribute('data-flagged') == 'true') continue;
+        if (tempSquare.getAttribute('data-flagged') == 'true'){
+            if (tempSquare.getAttribute('data-bomb') == 'true'){
+                tempSquare.style.backgroundColor = 'black';
+            }
+        }
         else if (tempSquare.getAttribute('data-bomb') == 'true'){
             tempSquare.style.backgroundColor = 'black';
             tempSquare.innerHTML = "<img src='bomb.png' alt='bomb icon' />";
