@@ -61,7 +61,6 @@ function newGame(){
     bombCount.innerText=`Bomb Count: ${bombNumber}`;
     createBombs(bombNumber);
     createNumbers();
-    console.log(gridSquares);
     gridSquares.forEach(element => element.addEventListener('click', eventClicked));
     autoFill.addEventListener('click', autoFillSquares);
     document.querySelector(".flagCountText").innerText = `Flags remaining: ${bombNumber - flagCount}`;
@@ -253,6 +252,8 @@ function createSquares(gridSize){
             square.setAttribute('data-row', i);
             square.setAttribute('data-column', j);
             square.setAttribute('id', id);
+            square.setAttribute('data-clicked', 'false');
+            square.setAttribute('data-flagged', 'false');
             square.value = '';
             row.appendChild(square);
             console.log(`added square column ${i} row ${j} id ${id}`);
