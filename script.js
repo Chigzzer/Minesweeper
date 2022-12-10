@@ -16,7 +16,7 @@ let flagCount = 0;
 let bombLocations = [];
 let idStack = [];
 
-//Adding initial event listeners
+// Adding initial event listeners
 difficultyLevels.forEach(element => element.addEventListener('click', setLevel));
 newGameButton.addEventListener('click', newGame);
 
@@ -49,7 +49,6 @@ function setLevel(){
 // To start a new game
 function newGame(){
     console.log("New game initiated");
-    console.log('Starting a new game');
     // Initializing values again.
     bombLocations = [];
     idStack = [];
@@ -91,10 +90,7 @@ function autoFillSquares(){
 }
 
 // Function for every click on a grid square
-function eventClicked(e){
-    console.log("Square clicked");
-    console.log(e.target);
-    console.log("above");   
+function eventClicked(e){  
     if (e.button == 0 && e.ctrlKey){
         flagSelected(e.target)
     }
@@ -107,14 +103,9 @@ function eventClicked(e){
 
 // Function to flag and un-flag square 
 function flagSelected(event){
-    console.log(event.getAttribute('data-clicked'));
+    console.log("Setting flag");
     let flagSquare = document.getElementById(event.id);
-    if (flagSquare == null){
-        return;
-    }
-    else if (flagSquare.getAttribute('data-clicked') == 'true'){
-        return;
-    }
+    if (flagSquare == null || flagSquare.getAttribute('data-clicked') == 'true') return;
     else if (flagSquare.getAttribute('data-flagged') == 'true'){
         flagSquare.removeChild(flagSquare.lastChild);
         flagCount--;
@@ -134,20 +125,10 @@ function flagSelected(event){
 
 // Function when a square is clicked.
 function squareClicked(event){
-    if (event.getAttribute('data-clicked') == 'true'){
-        return;
-    }
-
-    if (event.getAttribute('data-flagged') == 'true'){
-        return;
-    }
-    else{
-        if (idStack.includes(event.id)){
-            return;
-        }
-        else{
-            getNumber(event.id);
-        }
+    if (event.getAttribute('data-clicked') == 'true' || event.getAttribute('data-flagged') == 'true') return;
+    else {
+        if (idStack.includes(event.id)) return;
+        else getNumber(event.id);
         return
     }
 }
@@ -187,8 +168,6 @@ function getNumber(id){
     let clickedSquare = document.getElementById(id);
     let idInt =parseInt(id);
     clickedSquare.setAttribute('data-clicked', 'true');
-    console.log(idStack);
-    console.log(idStack.includes(idInt));
     if (idStack.includes(idInt)){
         return;
     }
@@ -259,7 +238,6 @@ function createSquares(gridSize){
             square.setAttribute('data-flagged', 'false');
             square.value = '';
             row.appendChild(square);
-            console.log(`added square column ${i} row ${j} id ${id}`);
             id++;
         }
         container.appendChild(row);
@@ -295,7 +273,6 @@ function createNumbers(){
 
 // Generates numbers around bomb location
 function populateNumbers(location){
-    console.log(`populating location ${location.id}`);
     row: for (let i = (parseInt(location.getAttribute('data-row')) - 1); i <= (parseInt(location.getAttribute('data-row')) + 1); i++){
         column: for (let j = (parseInt(location.getAttribute('data-column')) - 1); j <= (parseInt(location.getAttribute('data-column')) + 1); j++){         
             if (i < 1 || i > 16) continue row;

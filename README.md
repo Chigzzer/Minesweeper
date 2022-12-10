@@ -1,6 +1,22 @@
 #  Minesweeper
+## Author: Chiraag Chandarana
+## Live: https://chigzzer.github.io/Sketch/Minesweeper
+ # Description
+ A small project I wanted to work on in order to get a better understanding of recursion and event listeners; while further developing my JavaScript and HTML skills.
 
-# To Do
-* Sort out glitch where first element is added to the stack twice.
-* Add button to fill in all non-flagged squares 
-* Need to fix issue where flagged item is clicked
+ A simple copy of the old school Minesweeper game. User has the ability to choose 3 different levels of difficulty. The user can flag and un-flag cells to alert where they think bombs are. A flag counter which auto updates is present on the web page and once all the flags have been used; the player can click a auto complete button to fill in all the non-flagged squares.
+
+ If the player selects a empty square, one that is not next to a bomb, it will ripple around till all empty squares. 
+
+
+# What I Learnt
+* The use of Z-axis to choose the stack order of elements on the page
+    * To be able to click the square rather than the flag element.
+* How to pass the event to an external function.
+* The ability to use one liner in 'if' statements.
+* Loop tags
+* How to do a basic overlay of items using negative margins.
+* Understanding of let and constant variables and the location.
+* Difference in small features between FIrefox and Chrome. 
+* Use of custom attributes - 'data-*'
+
