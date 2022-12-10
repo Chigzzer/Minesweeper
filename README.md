@@ -1,6 +1,6 @@
 #  Minesweeper
 ## Author: Chiraag Chandarana
-## Live: https://chigzzer.github.io/Sketch/Minesweeper
+## Live: https://chigzzer.github.io/Minesweeper/
  # Description
  A small project I wanted to work on in order to get a better understanding of recursion and event listeners; while further developing my JavaScript and HTML skills.
 
