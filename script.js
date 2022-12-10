@@ -95,12 +95,7 @@ function autoFillSquares(){
 function eventClicked(e){
     console.log("Square clicked");
     if (e.button == 0 && e.ctrlKey){
-        if (e.explicitOriginalTarget.parentNode.getAttribute('data-flagged') == 'true'){
-            flagSelected(e.explicitOriginalTarget.parentNode);
-        }
-        else{
-            flagSelected(e.explicitOriginalTarget);
-        }
+        flagSelected(e.explicitOriginalTarget)
     }
     else if( e.button == 0){
         console.log(e);
@@ -145,11 +140,6 @@ function squareClicked(event){
         return;
     }
     else{
-        /*if( event.id == ""){
-            console.log(event.parentNode.id);
-            getNumber(event.parentNode.id)
-            return
-        }*/
         if (idStack.includes(event.id)){
             return;
         }
