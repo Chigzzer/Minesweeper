@@ -1,6 +1,9 @@
 body{
     height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
+
 
 .mainBody{
     display: flex;
@@ -10,6 +13,7 @@ body{
     flex: 1;
     height: 100%;
     gap: 12px;
+    border: 1px pink solid;
 }
 
 .clicked{
@@ -103,4 +107,5 @@ body{
 
 .title{
     text-align: center;
+    border: red 1px solid;
 }

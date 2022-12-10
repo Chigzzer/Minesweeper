@@ -1,59 +1,56 @@
-
+// Setting 
 const container = document.querySelector('.container');
 const containerBox = document.querySelector('.containerBox');
-
 const autoFill = document.querySelector('#autoFill');
 const bombCount = document.querySelector('#bombCount');
 const difficultyLevels = document.querySelectorAll('.difficultyButtons');
 const newGameButton = document.querySelector('#levelSubmit');
 const curtain = document.querySelector('.curtain');
 
+// Setting initial 
 let gridSquares;
-let level = 1;
 let padSize = 440;
 let gridSize = 16;
 let bombNumber = 51;
 let flagCount = 0;
 let bombLocations = [];
 let idStack = [];
-let gameFinished = false;
 
+//Adding initial event listeners
 difficultyLevels.forEach(element => element.addEventListener('click', setLevel));
 newGameButton.addEventListener('click', newGame);
+
 container.style.width = padSize + 'px'; 
 containerBox.style.width = padSize + 'px'; 
 container.style.height = padSize + 'px';
 containerBox.style.height = padSize + 'px';
 
-
+// Set difficulty of the game
 function setLevel(){
     difficultyLevels.forEach(element => element.classList.remove('clicked'));
     
     if (this.value == "0"){
         bombNumber = Math.floor((gridSize * gridSize) * 0.1);
+        console.log ("Setting level to easy");
         this.classList.add('clicked');
     }
     else if (this.value == "1"){
         bombNumber = Math.floor((gridSize * gridSize) * 0.2);
+        console.log ("Setting level to medium");
         this.classList.add('clicked');
     }
     else if (this.value == "2"){
         bombNumber = Math.floor((gridSize * gridSize) * 0.3);
+        console.log ("Setting level to Hard");
         this.classList.add('clicked');
     }
-    /*else{
-        console.log("random");
-        console.log(Math.random() * (gridSize * gridSize));
-        bombNumber = Math.round(Math.random() * (gridSize * gridSize));
-        console.log(`bomnb number: ${bombNumber}`);
-    }*/
-
-
-
 }
+
+// To start a new game
 function newGame(){
     console.log("New game initiated");
-    console.log('starting game');
+    console.log('Starting a new game');
+    // Initializing values again.
     bombLocations = [];
     idStack = [];
     flagCount = 0;
@@ -71,6 +68,7 @@ function newGame(){
     return;
 }
 
+// Function to auto fill in the squares once all flags have been placed. 
 function autoFillSquares(){
     console.log('Auto filling squares');
     for (let i = 1; i <= (gridSize*gridSize); i++){
@@ -93,15 +91,10 @@ function autoFillSquares(){
     return;
 }
 
-
-
-
+// Function for every click on a grid square
 function eventClicked(e){
-
-    console.log(e);
+    console.log("Square clicked");
     if (e.button == 0 && e.ctrlKey){
-        console.log("HERE");
-        console.log(e.explicitOriginalTarget.parentNode);
         if (e.explicitOriginalTarget.parentNode.getAttribute('data-flagged') == 'true'){
             flagSelected(e.explicitOriginalTarget.parentNode);
         }
@@ -113,13 +106,10 @@ function eventClicked(e){
         console.log(e);
         squareClicked(e.explicitOriginalTarget);
     }
-    console.log(gameFinished);
-    if (gameFinished == true){
-        return;
-    }
     return
 }
 
+// Function to flag and un-flag square 
 function flagSelected(event){
     console.log(event.getAttribute('data-clicked'));
     let flagSquare = document.getElementById(event.id);
@@ -144,9 +134,9 @@ function flagSelected(event){
     return;
 }
 
+// Function when a square is clicked.
 function squareClicked(event){
-    console.log("HERE");
-    console.log(event);
+    console.log("") 
     if (event.getAttribute('data-clicked') == 'true'){
         return;
     }
@@ -155,12 +145,11 @@ function squareClicked(event){
         return;
     }
     else{
-        if( event.id == ""){
-            console.log("HERE2");
+        /*if( event.id == ""){
             console.log(event.parentNode.id);
             getNumber(event.parentNode.id)
             return
-        }
+        }*/
         if (idStack.includes(event.id)){
             return;
         }
@@ -171,25 +160,25 @@ function squareClicked(event){
     }
 }
 
+// Function that runs at the end of every game
 function gameOver(argument){
     curtain.innerHTML = '';
     curtain.classList.remove('hidden');
     if (argument == 'lose'){
         console.log('Game over you lost');
-        gameFinished = true;
         curtain.innerHTML = "<p> You Lost :( </p>";
         gridSquares.forEach(element => element.removeEventListener('click', eventClicked));
         return; 
     }
     else{
         console.log('win');
-        gameFinished = true;
         curtain.innerHTML = "<p> You Won </p>";
         gridSquares.forEach(element => element.removeEventListener('click', eventClicked));
         return;
     }
 }
 
+// Check number of selected square or whether it is a bomb.
 function getNumber(id){
     let clickedSquare = document.getElementById(id);
     let idInt =parseInt(id);
@@ -199,13 +188,13 @@ function getNumber(id){
     if (idStack.includes(idInt)){
         return;
     }
-    else{
-        idStack.push(idInt);
+    idStack.push(idInt);
+    if (clickedSquare.getAttribute('data-flagged') == 'true'){
+        return;
     }
-    if (clickedSquare.value >= 1){
+    else if (clickedSquare.value >= 1){
         clickedSquare.innerHTML = clickedSquare.value;
         clickedSquare.style.backgroundColor = 'grey';
-     
     }
     else if (clickedSquare.getAttribute('data-bomb') == 'true'){
         clickedSquare.innerHTML = clickedSquare.value;
@@ -214,11 +203,6 @@ function getNumber(id){
         clickedSquare.innerHTML = "<img src='bomb.png' alt='bomb icon' />";
         gameOver('lose');
         return;
-    
-    }
-    else if (clickedSquare.getAttribute('data-flagged') == 'true'){
-        return;
-    
     }
     else{
         clickedSquare.style.backgroundColor='yellow';
@@ -242,7 +226,6 @@ function getNumber(id){
             }
         }
         
-
     }
      console.log(`stack: ${idStack}`);
     if (idStack.length + bombNumber == gridSize * gridSize){
@@ -250,6 +233,7 @@ function getNumber(id){
     }
     return;
 }
+
 
 function createSquares(gridSize){
     let squares;
