@@ -25,15 +25,18 @@ body{
 
 .curtain{
     transform: rotate(0deg);
-    margin-top: -445px;
+    margin-top: -442px;
     text-align: center;
     height: 100%;
     width: 100%;
     background: rgba(0, 0, 0, 0.6);
     color: white;
-    vertical-align: middle;
-    margin-bottom: auto;
+    justify-content: center;
+    align-items: center;
+    border: 01px red solid;
+    
 }
+
 .curtain p{
     color: red;
     margin-top: 40%;
@@ -61,6 +64,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 12px;
 }
 
 .container{
@@ -93,6 +97,7 @@ body{
     gap: 10px;
     align-items: center;
     justify-content: center;
+    margin-top: 12px;
 }
 
 #autoComplete{

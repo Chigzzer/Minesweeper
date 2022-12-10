@@ -164,6 +164,7 @@ function squareClicked(event){
 function gameOver(argument){
     curtain.innerHTML = '';
     curtain.classList.remove('hidden');
+    //curtain.setAttribute("style", "display:felx");
     for ( let i = 1; i <= (gridSize * gridSize); i++){
         let tempSquare = document.getElementById(i);
         if (tempSquare.getAttribute('data-bomb') == 'true'){
