@@ -164,6 +164,17 @@ function squareClicked(event){
 function gameOver(argument){
     curtain.innerHTML = '';
     curtain.classList.remove('hidden');
+    for ( let i = 1; i <= (gridSize * gridSize); i++){
+        let tempSquare = document.getElementById(i);
+        if (tempSquare.getAttribute('data-bomb') == 'true'){
+            tempSquare.style.backgroundColor = 'black';
+            tempSquare.innerHTML = "<img src='bomb.png' alt='bomb icon' />";
+          }
+          else{
+            tempSquare.style.backgroundColor = 'yellow';
+            tempSquare.innerText = tempSquare.value;
+          }
+    }
     if (argument == 'lose'){
         console.log('Game over you lost');
         curtain.innerHTML = "<p> You Lost :( </p>";
@@ -269,7 +280,6 @@ function createBombs(number){
         if (bombLocations.includes(bombSquareIndex)) continue;
         let bombSquare = document.getElementById(bombSquareIndex);
         bombSquare.setAttribute('data-bomb', 'true');
-        bombSquare.style.backgroundColor = 'pink';
         bombLocations.push(bombSquareIndex);
         i++
     }

@@ -13,7 +13,6 @@ body{
     flex: 1;
     height: 100%;
     gap: 12px;
-    border: 1px pink solid;
 }
 
 .clicked{
@@ -26,7 +25,6 @@ body{
 
 .curtain{
     transform: rotate(0deg);
-    border:green solid 1px;
     margin-top: -445px;
     text-align: center;
     height: 100%;
@@ -67,16 +65,15 @@ body{
 
 .container{
     display: flex;
-    border: 2px solid black;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     z-index: -1; 
+    border: 2px black solid;
 }
 
 .containerBox{
-    border: 1px blue solid;
     margin-bottom: 5px;
 }
 
@@ -107,5 +104,4 @@ body{
 
 .title{
     text-align: center;
-    border: red 1px solid;
 }
