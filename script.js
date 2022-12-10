@@ -204,32 +204,28 @@ function getNumber(id){
         gameOver('lose');
         return;
     }
-    else{
-        clickedSquare.style.backgroundColor='yellow';
-        for (let i = (parseInt(clickedSquare.getAttribute('data-row')) - 1); i <= (parseInt(clickedSquare.getAttribute('data-row')) + 1); i++){
-            if (i < 1 || i > 16){ continue;}
-            for (let j = (parseInt(clickedSquare.getAttribute('data-column')) - 1); j <= (parseInt(clickedSquare.getAttribute('data-column')) + 1); j++){         
-                if (j < 1 || j > 16) {continue;}            
-                let idCheck = gridSize * (i-1) + j;
-                if (idCheck == id){continue;}
-                if (document.getElementById(idCheck) == null){
-                    continue;
-                }
-                else{
-                    if (idStack.includes(idCheck) == true ){
-                        continue;
-                    }
-                    else{
-                        getNumber(idCheck);
-                    }
-                }
+    else spreadBlank(clickedSquare, id);
+    if (idStack.length + bombNumber == gridSize * gridSize) {
+        gameOver('win');
+    }
+    return;
+}
+
+// Function to spread if a blank square is clicked
+function spreadBlank(square, id){
+    square.style.backgroundColor='yellow';
+    for (let i = (parseInt(square.getAttribute('data-row')) - 1); i <= (parseInt(square.getAttribute('data-row')) + 1); i++){
+        if (i < 1 || i > 16) continue;
+        for (let j = (parseInt(square.getAttribute('data-column')) - 1); j <= (parseInt(square.getAttribute('data-column')) + 1); j++){         
+            if (j < 1 || j > 16) continue;            
+            let idCheck = gridSize * (i-1) + j;
+            if (idCheck == id) continue;
+            if (document.getElementById(idCheck) == null) continue;
+            else{
+                if (idStack.includes(idCheck) == true ) continue;
+                else getNumber(idCheck);
             }
         }
-        
-    }
-     console.log(`stack: ${idStack}`);
-    if (idStack.length + bombNumber == gridSize * gridSize){
-        gameOver('win');
     }
     return;
 }
