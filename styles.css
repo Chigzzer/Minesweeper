@@ -59,6 +59,7 @@ body{
 }
 
 
+
 .mainSection{
     display: flex;
     flex-direction: column;
@@ -88,7 +89,12 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 }   
+
+.flagged{
+    z-index: -1;
+}
 
 #autoFinish{
     display: flex;

@@ -93,12 +93,14 @@ function autoFillSquares(){
 // Function for every click on a grid square
 function eventClicked(e){
     console.log("Square clicked");
+    console.log(e.target);
+    console.log("above");   
     if (e.button == 0 && e.ctrlKey){
-        flagSelected(e.explicitOriginalTarget)
+        flagSelected(e.target)
     }
     else if( e.button == 0){
-        console.log(e);
-        squareClicked(e.explicitOriginalTarget);
+        //console.log(e);
+        squareClicked(e.target);
     }
     return
 }
@@ -117,12 +119,14 @@ function flagSelected(event){
         flagSquare.removeChild(flagSquare.lastChild);
         flagCount--;
         flagSquare.setAttribute('data-flagged', 'false');
+        flagSquare.classList.remove('flagged');
     }
     else{
         if (flagCount == bombNumber) return;
         flagSquare.setAttribute('data-flagged', 'true');
         flagCount++;
         flagSquare.innerHTML = `<img id=${event.id} src='flag.png' alt='flag icon' />`;
+        flagSquare.classList.add('flagged');
     }
     document.querySelector(".flagCountText").innerText = `Flags remaining: ${bombNumber - flagCount}`;
     return;
@@ -130,7 +134,6 @@ function flagSelected(event){
 
 // Function when a square is clicked.
 function squareClicked(event){
-    console.log("") 
     if (event.getAttribute('data-clicked') == 'true'){
         return;
     }
