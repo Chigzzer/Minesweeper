@@ -28,7 +28,6 @@ containerBox.style.height = padSize + 'px';
 // Set difficulty of the game
 function setLevel(){
     difficultyLevels.forEach(element => element.classList.remove('clicked'));
-    
     if (this.value == "0"){
         bombNumber = Math.floor((gridSize * gridSize) * 0.1);
         console.log ("Setting level to easy");
@@ -133,7 +132,6 @@ function squareClicked(event){
 function gameOver(argument){
     curtain.innerHTML = '';
     curtain.classList.remove('hidden');
-    //curtain.setAttribute("style", "display:felx");
     for ( let i = 1; i <= (gridSize * gridSize); i++){
         let tempSquare = document.getElementById(i);
         if (tempSquare.getAttribute('data-flagged') == 'true'){
